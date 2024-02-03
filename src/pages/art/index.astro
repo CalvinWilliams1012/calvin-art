@@ -2,7 +2,7 @@
     import Layout from '../../layouts/Layout.astro';
     import ImageGallery from '../../components/ImageGallery.astro';
 
-    const title = "art.";
+    const title = "art";
     /*
     Can't pass anything but string literal to Astro.glob.... so this works..
     https://stackoverflow.com/questions/72077023/import-meta-glob-can-only-accept-string-literals
@@ -10,7 +10,7 @@
     */    
     const folders = ['2024','2023','2022','_old'];
     const titles = ['2024','2023','2022','Older'];
-    const allImages = await Astro.glob("../../images/*/*.jpg").then(files => { return files.map(file => file.default)});
+    const allImages = await Astro.glob("../../images/*/*").then(files => { return files.map(file => file.default)});
     //Filtering out any of my _alt images, which are references used for my drawings/paintings 
     const allImagesNoAlt = allImages.filter(image => !image.src.includes("alt"));
 
@@ -22,6 +22,8 @@
 ---
 <Layout title={title}>
     <div class="gallery-container">
+        <h1>Just a dump of my art from my camera roll - the good, bad, and the ugly. </h1>
+        <p>My <a class="link-highlight" href="https://www.instagram.com/calvin_williams_art/">Instagram</a> is a more curated, and more interactive!</p>
         {imageCollections.map((collection, index)=>{
             return(
                     <ImageGallery title={titles[index]} images={collection.reverse()}/>

@@ -1,0 +1,144 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="tech">
+    <div class="tech-container">
+    <h1>See my resume, <a class="link-highlight" href="#resume-container">below</a></h1>
+    <p>I first stumbled upon the wonders of coding through the fascinating world of Minecraft mods. Yes, you read it right – my curiosity sparked when I discovered the thrill of tweaking and bending the rules of the pixelated Minecraft universe. What started in pixelated landscapes has evolved into a rewarding professional journey.</p>
+    <p>If you're curious about my professional journey and the projects I've been a part of, feel free to <a class="link-highlight" href="www.linkedin.com/in/👨‍💻calvin-williams-bb1396137">connect with me on LinkedIn</a></p>
+    <p>To explore some of my coding endeavors, take a peek at <a class="link-highlight" href="https://github.com/CalvinWilliams1012">my GitHub profile</a></p>
+    <div class="resume-container" id="resume-container">
+            <div>
+                <h1>Experience</h1>
+                    <h3>
+                    Sitecore<small> / Gatineau, Quebec</small>
+                    </h3>
+                    <h3>Senior Software Engineer</h3>
+                    <h4>Sep 2021 - Present</h4>
+                    <ul>
+                    <li>
+                        Providing Sitecore/C#/ASP.NET/JavaScript technical support for
+                        L1/L2/L3 incidents.
+                    </li>
+                    <li>
+                        Participate in Follow the Sun support shifts ensuring 24x7x365
+                        availability where immediate emergency technical support is
+                        required.
+                    </li>
+                    <li>
+                        Work closely with development team and product management to
+                        ensure unity between product development and support
+                    </li>
+                    <li>
+                        Development of Sitecore patches and hotfixes.
+                    </li>
+                    <li>
+                        Translate support issues into understandable product defects
+                        and subsequently report said defects to the product build
+                        team.
+                    </li>
+                    <li>
+                        Providing C#, ASP.NET and Sandbox training for new recruits
+                        and conducting examinations to assess their knowledge.
+                    </li>
+                    <li>
+                        Improve internal and external knowledge through writing
+                        articles and creating practical educational tasks.
+                    </li>
+                    </ul>
+                    <h3>Software Engineer</h3>
+                    <h4>Jul 2018 - Sep 2021</h4>
+                    <h3>Software Engineer Trainee</h3>
+                    <h4>Apr 2018 - Jul 2018</h4>
+                </div>
+                <div>
+                    <h1>Education</h1>
+                        <h3>
+                            Algonquin College
+                            <small> / Ottawa, Ontario</small>
+                        </h3>
+            
+                        <h3>Computer Programming</h3>
+                        <small> Ontario College Diploma</small>
+            
+                        <h4>2015 - 2017</h4>
+                        <h4>
+                            Dean's Honour Roll recipient for excelling in academics
+                            (Winter 2016 Semester)
+                        </h4>
+                        <a  href="https://www.credly.com/badges/30b5a82a-e2a0-4235-9dd4-c6a458d0d0f6">
+                        <h3>Microsoft Azure Fundamentals</h3>
+                        <small class="link-highlight"> Microsoft Certification</small>
+                        <h4>Jun 2022</h4>
+                        </a>
+                </div>
+                <div>
+                    <h1>Skills & Tech</h1>
+                    <h3>Proficient</h3>
+                    <h4>
+                    <span >C#</span>
+                    <span >ASP.NET</span>
+                    <span >JavaScript</span>
+                    <span >SQL</span>
+                    <span >Microsoft Sql Server</span>
+                    <span >IIS</span>
+                    <span >
+                        Microsoft Azure Cloud Technologies
+                    </span>
+                    <span >Azure DevOps</span>
+                    <span >Git</span>
+                    <span >Visual Studio</span>
+                    <span >Visual Studio Code</span>
+                    <span >ILSpy</span>
+                    <span >Fiddler</span>
+                    <span >WinDbg</span>
+                    <span >DebugDiag</span>
+                    <span >ProcDump</span>
+                    <span >dotTrace</span>
+                    <span >PerfView</span>
+                    <span >HTML</span>
+                    <span >CSS</span>
+                    <span>Microsoft Office Suite</span>
+                    </h4>
+        
+                    <h3>Familiarity</h3>
+                    <h4>
+                    <span>Java</span>
+                    <span>Docker</span>
+                    <span>Kubernetes</span>
+                    <span>React</span>
+                    <span>Next.js</span>
+                    <span>Gatsby</span>
+                    <span>Redis</span>
+                    <span>MongoDB</span>
+                    <span>Apache Solr</span>
+                    <span>PHP</span>
+                    <span>PowerShell</span>
+                    </h4>
+                </div>    
+        </div>
+    </div>
+</Layout>
+
+<style>
+    .tech-container{
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+    }
+
+    .resume-container{
+        display: flex;
+        flex-grow: 1;
+        font-family: 'Courier New', Courier, monospace !important;
+    }
+
+    div{
+        flex-basis:400px;
+        margin: 0 1em;
+    }
+    span:not(:empty):not(:last-child):after {
+      content: ", ";
+    }
+</style>
