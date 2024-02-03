@@ -1,0 +1,13 @@
+---
+    import { Image } from 'astro:assets';
+    interface Props{
+        images: any[]
+    }
+    const data = Astro.props;
+---
+<div>
+    {data.images.map((image : any) =>{
+        return(<Image src={image} alt="test"/>)
+    })}
+</div>
+

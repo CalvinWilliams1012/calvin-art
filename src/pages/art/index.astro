@@ -1,42 +1,28 @@
 ---
     import { Image } from 'astro:assets';
 
+    import ImageGallery from '../../components/ImageGallery.astro';
+
     /*
-    Can't pass anything but string literal to Astro.glob.... so I have to workaround this
-    Just have to have one line of code per folder :(
-
-    If they change this, I can dynamically retreive folders and then can add/remove folders without updaing this..
-
+    Can't pass anything but string literal to Astro.glob.... so this works..
     https://stackoverflow.com/questions/72077023/import-meta-glob-can-only-accept-string-literals
-    
     https://docs.astro.build/en/guides/troubleshooting/#astroglob---no-matches-found
-
-    const images = [
-        await Astro.glob("../../images/_old/*.jpg").then(files => {return files.map(file => {if(!(file.default.src.indexOf("alt")!=-1)){return file.default }});}),
-        await Astro.glob("../../images/2022/*.jpg").then(files => {return files.map(file => {if(!(file.default.src.indexOf("alt")!=-1)){return file.default }});}),
-        await Astro.glob("../../images/2023/*.jpg").then(files => {return files.map(file => {if(!(file.default.src.indexOf("alt")!=-1)){return file.default }});}),
-        await Astro.glob("../../images/2024/*.jpg").then(files => {return files.map(file => {if(!(file.default.src.indexOf("alt")!=-1)){return file.default }});}),
-    ]; 
     */    
     const folders = ['_old','2022','2023','2024'];
     const allImages = await Astro.glob("../../images/*/*.jpg").then(files => { return files.map(file => file.default)});
+    //Filtering out any of my _alt images, which are references used for my drawings/paintings 
     const allImagesNoAlt = allImages.filter(image => !image.src.includes("alt"));
 
-    const test = allImagesNoAlt.filter(image => image.src.includes("_old"));
+    //Go through all the image paths and split them into seperate collections if they contain folder name in path.. 
     const imageCollections = [];
     for(let i = 0; i<folders.length; i++){
         imageCollections[i] = allImagesNoAlt.filter(image => image.src.includes(folders[i]));
     }
-    console.log(test == imageCollections[0]);
 ---
 <div>
     {imageCollections.map((collection)=>{
         return(
-            <div>
-                {collection.map((image) =>{
-                    return(<Image src={image} alt="test"/>)
-                })}
-            </div>
+            <ImageGallery images={collection}/>
         )
     })}
 </div>
