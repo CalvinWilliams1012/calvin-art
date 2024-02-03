@@ -1,14 +1,15 @@
 ---
-    import { Image } from 'astro:assets';
-
+    import Layout from '../../layouts/Layout.astro';
     import ImageGallery from '../../components/ImageGallery.astro';
 
+    const title = "art.";
     /*
     Can't pass anything but string literal to Astro.glob.... so this works..
     https://stackoverflow.com/questions/72077023/import-meta-glob-can-only-accept-string-literals
     https://docs.astro.build/en/guides/troubleshooting/#astroglob---no-matches-found
     */    
-    const folders = ['_old','2022','2023','2024'];
+    const folders = ['2024','2023','2022','_old'];
+    const titles = ['2024','2023','2022','Older'];
     const allImages = await Astro.glob("../../images/*/*.jpg").then(files => { return files.map(file => file.default)});
     //Filtering out any of my _alt images, which are references used for my drawings/paintings 
     const allImagesNoAlt = allImages.filter(image => !image.src.includes("alt"));
@@ -19,10 +20,19 @@
         imageCollections[i] = allImagesNoAlt.filter(image => image.src.includes(folders[i]));
     }
 ---
-<div>
-    {imageCollections.map((collection)=>{
-        return(
-            <ImageGallery images={collection}/>
-        )
-    })}
-</div>
+<Layout title={title}>
+    <div class="gallery-container">
+        {imageCollections.map((collection, index)=>{
+            return(
+                    <ImageGallery title={titles[index]} images={collection.reverse()}/>
+                
+            )
+        })}
+    </div>
+</Layout>
+<style>
+    .gallery-container{
+        display: flex;
+        flex-direction: column;
+    }
+</style>

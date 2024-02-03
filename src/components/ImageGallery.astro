@@ -1,13 +1,43 @@
 ---
     import { Image } from 'astro:assets';
     interface Props{
-        images: any[]
+        images: any[],
+        title: string
     }
     const data = Astro.props;
 ---
 <div>
+    <h1>{data.title}</h1>
+    <ul class="imagegallery">
     {data.images.map((image : any) =>{
-        return(<Image src={image} alt="test"/>)
+        return(
+        <li>
+            <Image class="image" src={image} alt="test"/>
+        </li>
+        )
     })}
+    </ul>
 </div>
+<style>
+    ul {
+        list-style: none;
+    }
+    h1{
+        color:#F4E8C1;
+    }
+    .imagegallery{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .imagegallery li{
+        display: flex;
+        flex-basis: 400px;
+    }
+    .imagegallery li img{
+        object-fit: cover;
+        max-width: 100%;
+        height: auto;
+    }
+</style>
 
