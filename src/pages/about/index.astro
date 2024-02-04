@@ -1,0 +1,48 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Image from 'astro/components/Image.astro';
+
+import meTech from '../../images/me5.jpg';
+import art from '../../images/art.jpg';
+import hardwork from '../../images/me4.jpg';
+
+import hikingOne from '../../images/me6.jpg';
+import hikingTwo from '../../images/me7.jpg';
+import hikingThree from '../../images/me8.jpg';
+import vacation from '../../images/me3.jpg';
+
+import family from '../../images/family.jpg';
+import pizza from '../../images/me2.jpg';
+import car from '../../images/car.jpg';
+
+---
+
+<Layout title="about">
+    <div>
+        <p>I'm Calvin! Thanks for visiting my section of the internet. I am currently working at Sitecore in a support role.</p>
+        <p>I love technology of course, here's me at a Microsoft conference!</p>
+        <Image src={meTech} alt="Me standing beside a Microsoft sign at a Microsoft conference"/>
+        <a class="link-highlight" href="/tech">more details on the tech page of my site</a>
+
+        <p>I am currently trying to improve my watercolour painting skills, <a class="link-highlight" href="/art">see some of my art here</a></p>
+        <Image src={art} alt="my watercolour easel set up beside a window"/>
+
+        <p>Partially because i've found creating things and hard work makes you feel great</p>
+        <Image src={hardwork} alt="me standing beside a torn down garage"/>
+
+        <p>When it's not so cold out, I like hiking, and recently have been fortunate enough to have done some travelling and I really enjoyed the new experiences and look forward to similar adventures in the future.</p>
+        <Image src={hikingOne} alt="me in Colorado standing beside a old log cabin and lake with the mountains in the background"/>
+        <Image src={hikingTwo} alt="me in Hawaii overlooking the ocean"/>
+        <Image src={hikingThree} alt="me in Puerto Rico with my friends posing on an old concrete bridge in the Jungle"/>
+        <Image src={vacation} alt="me in Puerto Rico beside a motorcycle"/>
+
+        <p>To end this page off, I love my family more than anything, my favourite food is pizza, and I love driving my car</p>
+        <Image src={family} alt="Me beside my mom and dad"/>
+        <Image src={pizza} alt="Me standing beside my black Toyota GR86 with some pizza"/>
+        <Image src={car} alt="A picture of my black Toyota GR86 in autumn leaves"/>
+    </div>
+</Layout>
+
+<style>
+
+</style>
