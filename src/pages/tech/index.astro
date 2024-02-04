@@ -1,20 +1,25 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import me from '../../images/me.jpg';
 ---
 
 <Layout title="tech">
     <div class="tech-container">
     <h1>See my resume, <a class="link-highlight" href="#resume-container">below</a></h1>
-    <p>I first stumbled upon the wonders of coding through the fascinating world of Minecraft mods. Yes, you read it right – my curiosity sparked when I discovered the thrill of tweaking and bending the rules of the pixelated Minecraft universe. What started in pixelated landscapes has evolved into a rewarding professional journey.</p>
-    <p>If you're curious about my professional journey and the projects I've been a part of, feel free to <a class="link-highlight" href="www.linkedin.com/in/👨‍💻calvin-williams-bb1396137">connect with me on LinkedIn</a></p>
-    <p>To explore some of my coding endeavors, take a peek at <a class="link-highlight" href="https://github.com/CalvinWilliams1012">my GitHub profile</a></p>
+    <p>I first stumbled upon the wonders of coding through the fascinating world of Minecraft mods. Yes, you read it right – my curiosity sparked when I discovered the thrill of tweaking and bending the rules of the pixelated Minecraft universe.</p>
+    <Image src={me} alt="A picture of me as a kid beside a laptop"/>
+    <p>As a teenager, I delved into the world of cryptocurrency, enthralled by the idea that I can make a computer work for me.</p>
+    <p>My curiosity ignited a passion for technology and a drive to understand how things work. What once started in pixelated landscape has evolved into a rewarding professional journey where I find joy in solving problems and learning new things.</p>
+    <p>If you're curious about my professional journey, feel free to <a class="link-highlight" href="www.linkedin.com/in/👨‍💻calvin-williams-bb1396137">connect with me on LinkedIn</a></p>
+    <p>To explore some of my coding endeavors, see <a class="link-highlight" href="https://github.com/CalvinWilliams1012">my GitHub profile</a></p>
     <div class="resume-container" id="resume-container">
             <div>
                 <h1>Experience</h1>
                     <h3>
                     Sitecore<small> / Gatineau, Quebec</small>
                     </h3>
-                    <h3>Senior Software Engineer</h3>
+                    <h2>Senior Software Engineer</h2>
                     <h4>Sep 2021 - Present</h4>
                     <ul>
                     <li>
@@ -47,9 +52,9 @@ import Layout from '../../layouts/Layout.astro';
                         articles and creating practical educational tasks.
                     </li>
                     </ul>
-                    <h3>Software Engineer</h3>
+                    <h2>Software Engineer</h2>
                     <h4>Jul 2018 - Sep 2021</h4>
-                    <h3>Software Engineer Trainee</h3>
+                    <h2>Software Engineer Trainee</h2>
                     <h4>Apr 2018 - Jul 2018</h4>
                 </div>
                 <div>
@@ -59,27 +64,28 @@ import Layout from '../../layouts/Layout.astro';
                             <small> / Ottawa, Ontario</small>
                         </h3>
             
-                        <h3>Computer Programming</h3>
-                        <small> Ontario College Diploma</small>
+                        <h2>Computer Programming</h2>
+                        <h4> Ontario College Diploma</h4>
             
                         <h4>2015 - 2017</h4>
-                        <h4>
+                        <small>
                             Dean's Honour Roll recipient for excelling in academics
                             (Winter 2016 Semester)
-                        </h4>
+                        </small>
                         <a  href="https://www.credly.com/badges/30b5a82a-e2a0-4235-9dd4-c6a458d0d0f6">
-                        <h3>Microsoft Azure Fundamentals</h3>
-                        <small class="link-highlight"> Microsoft Certification</small>
+                        <h2>Microsoft Azure Fundamentals</h2>
+                        <h4 class="link-highlight"> Microsoft Certification</h4>
                         <h4>Jun 2022</h4>
                         </a>
                 </div>
                 <div>
                     <h1>Skills & Tech</h1>
-                    <h3>Proficient</h3>
+                    <h2>Proficient</h2>
                     <h4>
                     <span >C#</span>
                     <span >ASP.NET</span>
                     <span >JavaScript</span>
+                    <span >Sitecore</span>
                     <span >SQL</span>
                     <span >Microsoft Sql Server</span>
                     <span >IIS</span>
@@ -87,6 +93,7 @@ import Layout from '../../layouts/Layout.astro';
                         Microsoft Azure Cloud Technologies
                     </span>
                     <span >Azure DevOps</span>
+                    <span >Jira</span>
                     <span >Git</span>
                     <span >Visual Studio</span>
                     <span >Visual Studio Code</span>
@@ -102,7 +109,7 @@ import Layout from '../../layouts/Layout.astro';
                     <span>Microsoft Office Suite</span>
                     </h4>
         
-                    <h3>Familiarity</h3>
+                    <h2>Familiarity</h2>
                     <h4>
                     <span>Java</span>
                     <span>Docker</span>
