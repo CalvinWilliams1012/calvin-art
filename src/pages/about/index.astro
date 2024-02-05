@@ -1,19 +1,25 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import Image from 'astro/components/Image.astro';
+import { Image } from 'astro:assets';
+import ImageGallery from '../../components/ImageGallery.astro';
 
 import meTech from '../../images/me5.jpg';
+const techGallery = [meTech];
 import art from '../../images/art.jpg';
+const artGallery = [art];
 import hardwork from '../../images/me4.jpg';
+const hardworkGallery = [hardwork];
 
 import hikingOne from '../../images/me6.jpg';
 import hikingTwo from '../../images/me7.jpg';
 import hikingThree from '../../images/me8.jpg';
 import vacation from '../../images/me3.jpg';
+const hikingGallery = [hikingOne,hikingTwo,hikingThree,vacation];
 
 import family from '../../images/family.jpg';
 import pizza from '../../images/me2.jpg';
 import car from '../../images/car.jpg';
+const carGallery = [family,pizza,car];
 
 ---
 
@@ -21,28 +27,26 @@ import car from '../../images/car.jpg';
     <div>
         <p>I'm Calvin! Thanks for visiting my section of the internet. I am currently working at Sitecore in a support role.</p>
         <p>I love technology of course, here's me at a Microsoft conference!</p>
-        <Image src={meTech} alt="Me standing beside a Microsoft sign at a Microsoft conference"/>
+        <ImageGallery images={techGallery} flexBasis='800px'/>
         <a class="link-highlight" href="/tech">more details on the tech page of my site</a>
 
         <p>I am currently trying to improve my watercolour painting skills, <a class="link-highlight" href="/art">see some of my art here</a></p>
-        <Image src={art} alt="my watercolour easel set up beside a window"/>
+        <ImageGallery images={artGallery} flexBasis='800px'/>
 
-        <p>Partially because i've found creating things and hard work makes you feel great</p>
-        <Image src={hardwork} alt="me standing beside a torn down garage"/>
+        <p>Partially because i've found creating things, or just hard work in general makes you feel great</p>
+        <ImageGallery images={hardworkGallery} flexBasis='800px'/>
 
         <p>When it's not so cold out, I like hiking, and recently have been fortunate enough to have done some travelling and I really enjoyed the new experiences and look forward to similar adventures in the future.</p>
-        <Image src={hikingOne} alt="me in Colorado standing beside a old log cabin and lake with the mountains in the background"/>
-        <Image src={hikingTwo} alt="me in Hawaii overlooking the ocean"/>
-        <Image src={hikingThree} alt="me in Puerto Rico with my friends posing on an old concrete bridge in the Jungle"/>
-        <Image src={vacation} alt="me in Puerto Rico beside a motorcycle"/>
+        <ImageGallery images={hikingGallery} flexBasis='300px'/>
 
         <p>To end this page off, I love my family more than anything, my favourite food is pizza, and I love driving my car</p>
-        <Image src={family} alt="Me beside my mom and dad"/>
-        <Image src={pizza} alt="Me standing beside my black Toyota GR86 with some pizza"/>
-        <Image src={car} alt="A picture of my black Toyota GR86 in autumn leaves"/>
+        <ImageGallery images={carGallery} title=""/>
     </div>
 </Layout>
 
 <style>
-
+    div{
+        display: flex;
+        flex-direction: column;
+    }
 </style>

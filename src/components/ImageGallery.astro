@@ -2,14 +2,15 @@
     import { Image } from 'astro:assets';
     interface Props{
         images: any[],
-        title: string
+        title?: string,
+        flexBasis?: string
     }
-    const data = Astro.props;
+    const {images, title = "", flexBasis = "400px"} = Astro.props;
 ---
 <div>
-    <h1>{data.title}</h1>
+    <h1>{title}</h1>
     <ul class="imagegallery">
-    {data.images.map((image : any) =>{
+    {images.map((image : any) =>{
         return(
         <li>
             <Image class="image" src={image} alt="test"/>
@@ -18,7 +19,7 @@
     })}
     </ul>
 </div>
-<style>
+<style define:vars={{basis: `${flexBasis}`}}>
     ul {
         list-style: none;
     }
@@ -31,7 +32,7 @@
     }
     .imagegallery li{
         display: flex;
-        flex-basis: 400px;
+        flex-basis: var(--basis);
     }
     .imagegallery li img{
         object-fit: cover;
