@@ -1,8 +1,11 @@
 import { defineConfig } from 'astro/config';
 
-// https://astro.build/config
+import netlify from "@astrojs/netlify";
+
 export default defineConfig({
-    redirects: {
-        '/about':'/'
-    }
+  output: "hybrid",
+  adapter: netlify(),
+  redirects: {
+    '/about': '/'
+  },
 });

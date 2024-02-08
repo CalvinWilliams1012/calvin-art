@@ -1,0 +1,12 @@
+---
+import { GET } from '../../api/itemdata';
+
+export const prerender = false;
+
+let response = await GET(Astro)
+const data = await response.json()
+---
+
+<div>
+    {data.items.map( item => <h1>{item.Name}</h1>)}
+</div>

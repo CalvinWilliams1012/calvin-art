@@ -10,8 +10,10 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^4.2.8",
     "@astrojs/check": "^0.4.1",
+    "@astrojs/netlify": "^5.1.0",
+    "@supabase/supabase-js": "^2.39.3",
+    "astro": "^4.2.8",
     "typescript": "^5.3.3"
   }
 }
