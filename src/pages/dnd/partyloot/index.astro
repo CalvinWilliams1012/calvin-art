@@ -1,5 +1,7 @@
 ---
 import { GET } from '../../api/itemdata';
+import Layout from '../../../layouts/Layout.astro';
+import PartyItem from '../../../components/PartyItem.astro';
 
 export const prerender = false;
 
@@ -7,6 +9,15 @@ let response = await GET(Astro)
 const data = await response.json()
 ---
 
-<div>
-    {data.items.map( item => <h1>{item.Name}</h1>)}
-</div>
+<Layout title="Party Loot">
+    <div>
+        {data.items.map( item => <PartyItem name={item.Name} description={item.Description} quantity={item.Quantity} />)}
+    </div>
+</Layout>
+<style>
+    div {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+</style>

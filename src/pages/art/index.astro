@@ -15,7 +15,7 @@
     const allImagesNoAlt = allImages.filter(image => !image.src.includes("alt"));
 
     //Go through all the image paths and split them into seperate collections if they contain folder name in path.. 
-    const imageCollections = [];
+    const imageCollections:any = [];
     for(let i = 0; i<folders.length; i++){
         imageCollections[i] = allImagesNoAlt.filter(image => image.src.includes(folders[i]));
     }

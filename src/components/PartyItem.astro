@@ -1,0 +1,23 @@
+---
+    interface Props {
+        name: string,
+        description: string,
+        quantity: number
+    }
+
+    const {name, description, quantity} = Astro.props;
+---
+<div>
+    <h1>{name}</h1>
+    <p><label>Quantity:</label> {quantity}</p>
+    <p><label>Description:</label> {description}</p>
+</div>
+<style>
+    div{
+        display: flex;
+        flex-basis: 200px;
+        flex-direction: column;
+        background-color: black;
+        border-radius: 5px;
+    }
+</style>
