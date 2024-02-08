@@ -1,0 +1,16 @@
+---
+export async function getStaticPaths() {
+    const allImages = await Astro.glob("../../images/art/*/*").then(files => { return files.map(file => file.default)});
+    //Filtering out any of my _alt images, which are references used for my drawings/paintings 
+    //then returning just the file name retreived by substringing between the last / and last . to generate the slugs
+    const allImageNames = allImages.filter(image => !image.src.includes("alt")).map(image => image.src.substring(image.src.lastIndexOf('/')+1,image.src.lastIndexOf('.')));
+
+    return allImageNames.map(name => {
+        return {
+            params: {art: name},
+        };
+    })
+}
+const {art} = Astro.params;
+---
+<div>Good {art}!</div>
