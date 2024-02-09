@@ -1,5 +1,7 @@
 ---
 import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+
 
 interface Props {
 	title: string;
@@ -30,6 +32,7 @@ const { title, desc = "Calvin Williams" } = Astro.props;
 		<div class="flexbox-container">
 			<Navigation/>
 			<slot />
+			<Footer/>
 		</div>
 	</body>
 </html>
@@ -72,5 +75,17 @@ const { title, desc = "Calvin Williams" } = Astro.props;
 		font-variation-settings:
 			"slnt" 0;
 	}
-
+    button{
+        font-size: large;
+        font-weight: bold;
+        color: tomato;
+        background-color: #F4E8C1;
+        transition-duration: 0.4s;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+    button:hover{
+        color:#F4E8C1;
+        background-color: tomato;
+    }
 </style>

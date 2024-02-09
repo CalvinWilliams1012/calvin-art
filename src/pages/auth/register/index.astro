@@ -1,0 +1,31 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+export const prerender = false;
+---
+
+<Layout title="Register" desc="Registration Page">
+    <div>
+        <h1>Register</h1>
+        <p class="inter-regular">Already have an account? <a class="link-highlight" href="/auth/signin">Sign in</a></p>
+        <form class="inter-regular" action="/api/auth/register" method="post">
+            <label for="email" for="email">Email</label>
+            <input type="email" name="email" id="email" />
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" />
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</Layout>
+<style>
+    div {
+        display: flex;
+        flex-direction: column;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+    label{
+        margin: 4px;
+    }
+</style>
