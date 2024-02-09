@@ -1,21 +1,37 @@
 ---
-import { GET } from '../api/itemdata';
 import Layout from '../../layouts/Layout.astro';
-import PartyItem from '../../components/PartyItem.astro';
+import PartyItem from '../../components/dnd/PartyItem.astro';
+import CurrencyDisplay from '../../components/dnd/CurrencyDisplay.astro';
 
 export const prerender = false;
 
-let response = await GET(Astro)
-const data = await response.json()
+const apiHost = import.meta.env.API_HOST;
+
+
+const bankResponse = await fetch(apiHost + '/bankdata');
+const bankData = await bankResponse.json();
+
+const itemResponse = await fetch(apiHost + '/itemdata');
+const itemData = await itemResponse.json();
 ---
 
 <Layout title="Party Loot">
-    <div>
-        {data.items.map( item => <PartyItem name={item.Name} description={item.Description} quantity={item.Quantity} />)}
+    <div class="main-container">
+        <div class="gen-container">
+            {bankData.coins.map( curr => <CurrencyDisplay currency_type={curr.currency_type} quantity={curr.quantity} />)}
+        </div>
+        <div class="gen-container">
+           {itemData.items.map( item => <PartyItem name={item.Name} description={item.Description} quantity={item.Quantity} />)}
+        </div>
     </div>
 </Layout>
 <style>
-    div {
+    .main-container {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .gen-container{
         display: flex;
         flex-wrap: wrap;
         gap: 10px;

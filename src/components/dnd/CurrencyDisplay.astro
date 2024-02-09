@@ -1,0 +1,30 @@
+---
+    import { Image } from 'astro:assets';
+
+    interface Props {
+        currency_type: string,
+        quantity: number
+    }
+
+    const {currency_type, quantity} = Astro.props;
+---
+<div>
+    <div class="coin-container">
+        <h1>{currency_type}</h1>
+        <Image width="50" height="50" src={import(`../../images/dnd/coins/${currency_type}.png`)} alt={currency_type}/>
+    </div>
+    <p class="inter-regular">{quantity}</p>
+</div>
+<style>
+    div{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .coin-container{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
