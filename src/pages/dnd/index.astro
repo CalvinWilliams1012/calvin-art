@@ -15,7 +15,7 @@ const itemResponse = await fetch(apiHost + '/itemdata');
 const itemData = await itemResponse.json();
 ---
 
-<Layout title="Boosted Bonobos">
+<Layout title="Boosted Bonobos" desc="Boosted Bonobos Dungeons & Dragons our party bank, loot, and more.">
     <div class="main-container">
         <div class="gen-container">
             {bankData.coins.map( curr => <CurrencyDisplay currency_type={curr.currency_type} quantity={curr.quantity} />)}
