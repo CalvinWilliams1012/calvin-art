@@ -1,9 +1,16 @@
 ---
-
+import { getUser } from "../lib/supabase";
+export const prerender = false;
+const { cookies, redirect } = Astro;
+const user = await getUser(cookies);
 ---
 <div class="footer-container">
     <ul>
-        <a href="/auth/signin">Sign In</a>
+        {!user ? <a href="/auth/signin">Sign In</a> : 
+          <form class="inter-regular" action="/api/auth/signout">
+            <button type="submit">Sign out</button>
+          </form>
+        }
     </ul>
 </div>
 

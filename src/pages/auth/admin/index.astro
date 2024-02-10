@@ -1,21 +1,26 @@
 ---
 import Layout from "../../../layouts/Layout.astro";
-import { getUser } from "../../../lib/supabase";
+import { getUser, addBonobo } from "../../../lib/supabase";
 export const prerender = false;
 
-const { cookies, redirect } = Astro;
+const { cookies, redirect, url } = Astro;
 const user = await getUser(cookies);
 
 if (!user) {
   return redirect("/auth/signin");
 }
 
-const email = user?.email;
+if(!(user?.email == "calvin@calvinwilliams.ca")){
+  return redirect("/auth/dashboard");
+}
+
+if(url.searchParams.get('userId')){
+    const result = await addBonobo(url.searchParams.get('userId'));
+}
 ---
-<Layout title="dashboard">
+<Layout title="admin">
     <div>
-        <h1>Welcome {email}</h1>
-        <p class="inter-regular">We are happy to see you here</p>
+        userId
     </div>
 </Layout>
 <style>
