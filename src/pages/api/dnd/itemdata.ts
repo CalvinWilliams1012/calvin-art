@@ -1,4 +1,4 @@
-import { supabase } from '../../lib/supabase.ts'
+import { supabase } from '../../../lib/supabase.ts'
 export const prerender = false;
 
 export async function GET({ params }) {

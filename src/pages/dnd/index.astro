@@ -8,10 +8,10 @@ export const prerender = false;
 const apiHost = import.meta.env.API_HOST;
 
 
-const bankResponse = await fetch(apiHost + '/bankdata');
+const bankResponse = await fetch(apiHost + '/dnd/bankdata');
 const bankData = await bankResponse.json();
 
-const itemResponse = await fetch(apiHost + '/itemdata');
+const itemResponse = await fetch(apiHost + '/dnd/itemdata');
 const itemData = await itemResponse.json();
 ---
 
