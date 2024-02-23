@@ -1,20 +1,10 @@
 ---
 import Layout from "../../../layouts/Layout.astro";
-import { getUser } from "../../../lib/supabase";
 export const prerender = false;
-
-const { cookies, redirect } = Astro;
-const user = await getUser(cookies);
-
-if (!user) {
-  return redirect("/auth/signin");
-}
-
-const email = user?.email;
 ---
 <Layout title="dashboard">
     <div>
-        <h1>Welcome {email}</h1>
+        <h1>Welcome {Astro.locals.email}</h1>
         <p class="inter-regular">We are happy to see you here</p>
     </div>
 </Layout>
