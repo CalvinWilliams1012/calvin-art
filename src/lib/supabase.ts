@@ -1,4 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
+import { createServerClient, type CookieOptions } from "@supabase/ssr";
+
 
 export const prerender = false;
 
@@ -12,11 +14,25 @@ export const supabase = createClient(
   },
 );
 
-const supabaseServiceRole = createClient(
-  import.meta.env.SUPABASE_URL,
-  import.meta.env.SUPABASE_SERVICE_ROLE
-);
-
+export async function ssrSupabase(cookies){
+  return createServerClient(
+    import.meta.env.SUPABASE_URL,
+    import.meta.env.SUPABASE_ANON_KEY,
+    {
+      cookies: {
+        get(key: string) {
+          return cookies.get(key)?.value;
+        },
+        set(key: string, value: string, options: CookieOptions) {
+          cookies.set(key, value, options);
+        },
+        remove(key: string, options) {
+          cookies.delete(key, options);
+        },
+      },
+    }
+  );
+} 
 
 export async function getUser(cookies){
   
@@ -28,8 +44,9 @@ export async function getUser(cookies){
     return null;
   }
 
+  const supaClient = await ssrSupabase(cookies);
   //Hit supabase, throws error if invalid session, or refreshes on expired
-  const { data, error } = await supabase.auth.setSession({
+  const { data, error } = await supaClient.auth.setSession({
     refresh_token: refreshToken.value,
     access_token: accessToken.value,
   });
@@ -48,6 +65,13 @@ export async function getUser(cookies){
   // return the session user.
   return data?.user;
 }
+
+
+//Service role can do anything, used only for admin actions
+const supabaseServiceRole = createClient(
+  import.meta.env.SUPABASE_URL,
+  import.meta.env.SUPABASE_SERVICE_ROLE
+);
 
 export async function addBonobo(userId){
   return await supabaseServiceRole.auth.admin.updateUserById(

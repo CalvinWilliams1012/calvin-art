@@ -1,8 +1,9 @@
 import type { APIRoute } from "astro";
-import { supabase } from "../../../lib/supabase";
+import { ssrSupabase } from "../../../lib/supabase";
 export const prerender = false;
 
-export const POST: APIRoute = async ({ request, redirect }) => {
+export const POST: APIRoute = async ({ cookies, request, redirect }) => {
+  const supaClient = await ssrSupabase(cookies);
   const formData = await request.formData();
   const email = formData.get("email")?.toString();
   const password = formData.get("password")?.toString();
@@ -11,7 +12,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     return new Response("Email and password are required", { status: 400 });
   }
 
-  const { error } = await supabase.auth.signUp({
+  const { error } = await supaClient.auth.signUp({
     email,
     password,
   });

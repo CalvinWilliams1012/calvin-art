@@ -21,7 +21,7 @@ const itemData = await itemResponse.json();
             {bankData.coins.map( curr => <CurrencyDisplay currency_type={curr.currency_type} quantity={curr.quantity} />)}
         </div>
         <div class="gen-container">
-           {itemData.items.map( item => <PartyItem name={item.Name} description={item.Description} quantity={item.Quantity} />)}
+           {itemData.items.map( item => <PartyItem id={item.id} name={item.Name} description={item.Description} quantity={item.Quantity} />)}
         </div>
     </div>
 </Layout>

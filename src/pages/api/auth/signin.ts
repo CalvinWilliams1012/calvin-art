@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { supabase } from "../../../lib/supabase";
+import { ssrSupabase } from "../../../lib/supabase";
 import type { Provider } from "@supabase/supabase-js";
 export const prerender = false;
 
@@ -9,10 +9,12 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
   const password = formData.get("password")?.toString();
   const provider = formData.get("provider")?.toString();
 
+  const supaClient = await ssrSupabase(cookies);
+
   const validProviders = ["google", "github", "discord"];
 
   if (provider && validProviders.includes(provider)) {
-    const { data, error } = await supabase.auth.signInWithOAuth({
+    const { data, error } = await supaClient.auth.signInWithOAuth({
       provider: provider as Provider,
       options: {
         redirectTo: import.meta.env.API_HOST+"/auth/callback"
@@ -30,7 +32,7 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
     return new Response("Email and password are required", { status: 400 });
   }
 
-  const { data, error } = await supabase.auth.signInWithPassword({
+  const { data, error } = await supaClient.auth.signInWithPassword({
     email,
     password,
   });

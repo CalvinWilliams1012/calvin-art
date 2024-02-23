@@ -1,15 +1,17 @@
 import type { APIRoute } from "astro";
-import { supabase } from "../../../lib/supabase";
+import { ssrSupabase } from "../../../lib/supabase";
 export const prerender = false;
 
 export const GET: APIRoute = async ({ url, cookies, redirect }) => {
+
+  const supaClient = await ssrSupabase(cookies);
   const authCode = url.searchParams.get("code");
 
   if (!authCode) {
     return new Response("No code provided", { status: 400 });
   }
 
-  const { data, error } = await supabase.auth.exchangeCodeForSession(authCode);
+  const { data, error } = await supaClient.auth.exchangeCodeForSession(authCode);
 
   if (error) {
     return new Response(error.message, { status: 500 });

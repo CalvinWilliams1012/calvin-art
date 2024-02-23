@@ -1,23 +1,30 @@
 ---
     interface Props {
+        id: number,
         name: string,
         description: string,
         quantity: number
     }
 
-    const {name, description, quantity} = Astro.props;
+    const {id, name, description, quantity} = Astro.props;
 ---
-<div>
-    <h1>{name}</h1>
-    <p class="inter-regular"><label>Quantity:</label> {quantity}</p>
-    <p class="inter-regular"><label>Description:</label> {description}</p>
-</div>
+<form action="/api/dnd/itemdata" method="post">
+    <input type="hidden" id="id" name="id" value={id}/>
+    <input type="text" name="name" value={name}/>
+    <label>Quantity:</label><input type="number" name="quantity" value={quantity}/>
+    <label>Description:</label><input type="text" name="desc" value={description}/>
+    </p>
+    <button type="submit">Test</button>
+</form>
 <style>
-    div{
+    form{
         display: flex;
         flex-basis: 200px;
         flex-direction: column;
         background-color: black;
         border-radius: 5px;
+    }
+    button{
+        height: 30px;
     }
 </style>
