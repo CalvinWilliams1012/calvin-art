@@ -17,10 +17,11 @@ const itemData = await itemResponse.json();
 
 <Layout title="Boosted Bonobos" desc="Boosted Bonobos Dungeons & Dragons our party bank, loot, and more.">
     <div class="main-container">
-        <div class="gen-container">
+        <input type="checkbox" id="edit-checkbox">
+        <div class="gen-container editable">
             {bankData.coins.map( curr => <CurrencyDisplay currency_type={curr.currency_type} quantity={curr.quantity} />)}
         </div>
-        <div class="gen-container">
+        <div class="gen-container editable">
            {itemData.items.map( item => <PartyItem id={item.id} name={item.Name} description={item.Description} quantity={item.Quantity} />)}
         </div>
     </div>
@@ -35,5 +36,10 @@ const itemData = await itemResponse.json();
         display: flex;
         flex-wrap: wrap;
         gap: 10px;
+    }
+</style>
+<style is:inline>
+    #edit-checkbox:checked ~ .editable form > button{
+        visibility: visible;
     }
 </style>
