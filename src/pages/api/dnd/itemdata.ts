@@ -12,7 +12,7 @@ export async function GET({ cookies }) {
   )
 }
 
-export async function POST({cookies, request}) {
+export async function POST({cookies, request, redirect}) {
   // Have RLS set up but need to do something like described here: https://github.com/orgs/supabase/discussions/1094
   // looks like it's expected to use supabase on client side not server side, so need to use this server side component example https://supabase.com/docs/guides/auth/server-side/creating-a-client?environment=server-component
   const supaClient = await ssrSupabase(cookies);
@@ -30,10 +30,12 @@ export async function POST({cookies, request}) {
     'Description': desc,
     'Quantity': quantity
   }).select();
-  console.log(error);
-  return new Response(
-    JSON.stringify({
-      updatedItem: data,
-    }),
-  )
+  if(error){
+    console.log(error);
+    return new Response(null, {
+      status: 500,
+      statusText: 'Error updating item.'
+    })
+  }
+  return redirect('/dnd');
 }
