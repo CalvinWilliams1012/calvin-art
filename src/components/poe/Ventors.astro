@@ -1,0 +1,293 @@
+---
+import { Image } from 'astro:assets';
+
+import ventorsImage from '../../images/poe/Ventors.png';
+import divineImage from '../../images/poe/divine.png';
+
+
+import leftUniqueIcon from '../../images/poe/Item_UI_header_double_unique_left.png';
+import rightUniqueIcon from '../../images/poe/Item_UI_header_double_unique_right.png';
+import middleUniqueIcon from '../../images/poe/Item_UI_header_double_unique_middle.png';
+import seperatorIcon from '../../images/poe/Item_UI_separator_unique.png';
+
+const leftUniqueIconUrl = `url(${leftUniqueIcon.src})`;
+const rightUniqueIconUrl = `url(${rightUniqueIcon.src})`;
+const middleUniqueIconUrl = `url(${middleUniqueIcon.src})`;
+const seperatorIconUrl = `url(${seperatorIcon.src})`;
+const divineUrl = `url(${divineImage.src})`;
+
+---
+<div>
+    <span id="itembox" class="item-box -unique">
+        <span class="header -double">
+            <span class="symbol"></span>Ventor's Gamble<br>Gold Ring<span class="symbol"></span>
+        </span>
+        <span class="item-stats">
+            <span class="group">Requires Level <em class="tc -value">64</em></span>
+            <span id="rarityImp" class="group tc -mod">+(6-15)% increased Rarity of Items found</span>
+            <span class="group tc -mod">
+                <span id="life">+(0-80) to maximum Life</span><br/>
+                <span id="spirit">+(0-20) to Spirit</span><br/>
+                <span id="rarityExp">(-40-40)% increased Rarity of Items found</span><br/>
+                <span id="fireRes">+(-40-40)% to Fire Resistance</span><br/>
+                <span id="coldRes">+(-40-40)% to Cold Resistance</span><br/>
+                <span id="lightRes">+(-40-40)% to Lightning Resistance</span><br/>
+            </span>
+            <span class="group tc -flavour">In a blaze of glory,<br>An anomaly defying all odds<br>The "unkillable" beast met the divine<br>And Ventor met his latest trophy.</span>
+        </span>
+        <span class="images">
+            <span typeof="mw:File">
+                <Image src={ventorsImage} alt="Ventors Gamble Gold Ring Unique art"/>
+            </span>
+        </span>
+    </span>
+    <div>
+        <div id="stash">
+            <Image id="divineOrb" src={divineImage} alt="Divine Orb"/>
+        </div>
+        <h1><span id="count">0</span> spent</h1>
+    </div>
+    <div>
+        <h1>Best:<span id="best">-</span></h1>
+        <h1>Worst:<span id="worst">-</span></h1>
+    </div>
+</div>
+
+
+
+<script>
+    const orb = document.getElementById('divineOrb');
+    const item = document.getElementById('itembox');
+    const stash = document.getElementById('stash');
+    const usageCount = document.getElementById('count');
+    const rarityImp = document.getElementById('rarityImp');
+    const life = document.getElementById('life');
+    const spirit = document.getElementById('spirit');
+    const rarityExp = document.getElementById('rarityExp');
+    const fireRes = document.getElementById('fireRes');
+    const coldRes = document.getElementById('coldRes');
+    const lightRes = document.getElementById('lightRes');
+    const bestSpan = document.getElementById('best');
+    const worstSpan = document.getElementById('worst');
+
+
+    var count = 0;
+    var best = 0;
+    var worst = 0;
+    const perfectRoll = 275;
+    const zeroRoll = -154;
+    var orbPickedUp = false;
+
+
+    //if the orb is picked up and we click the item, we reroll the stats
+    item?.addEventListener('click', reroll);
+
+    //places the orb back in the stash
+    stash?.addEventListener('click', (ev) => {
+        if(orbPickedUp){
+            orbPickedUp = false;
+        }
+        const orbStyle = orb?.style;
+        if(orbStyle){
+            orbStyle.position = '';
+        }
+        // we could also remove mouse listener here as it's just adding x+y to css of image
+    });
+
+    //right click to 'pickup' orb, follows mouse
+    orb?.addEventListener('contextmenu', (ev) => {
+        ev.preventDefault();
+        orbPickedUp = true;
+        const orbStyle = orb?.style;
+        orbStyle.position = 'absolute';
+        orbStyle.left = (ev.clientX+1) + 'px';
+        orbStyle.top = (ev.clientY+1) + 'px';
+        document.addEventListener('mousemove',(ev) =>{
+            orbStyle.left = (ev.clientX+1) + 'px';
+            orbStyle.top = (ev.clientY+1) + 'px';
+        });
+    },false);
+
+
+    function reroll(){
+        if(orbPickedUp){
+
+            //roll, tally, and update stats
+            var total = 0;
+            if(rarityImp){
+                var roll = randomWholeIntBetween(6,15);
+                total+=roll;
+                rarityImp.textContent = roll + '% increased Rarity of Items found';
+            }
+            if(life){
+                var roll = randomWholeIntBetween(0,80);
+                total+=roll;
+                life.textContent = roll + ' to maximum Life';
+            }
+            if(spirit){
+                var roll = randomWholeIntBetween(0,20);
+                total+=roll;
+                spirit.textContent = roll + ' to Spirit';
+            }
+            if(rarityExp){
+                var roll = randomWholeIntBetween(-40,40);
+                total+=roll;
+                rarityExp.textContent = roll + '% increased Rarity of Items found';
+            }
+            if(fireRes){
+                var roll = randomWholeIntBetween(-40,40);
+                total+=roll;
+                fireRes.textContent = roll + '% to Fire Resistance';
+            }
+            if(coldRes){
+                var roll = randomWholeIntBetween(-40,40);
+                total+=roll;
+                coldRes.textContent = roll + '% to Cold Resistance';
+            }
+            if(lightRes){
+                var roll = randomWholeIntBetween(-40,40);
+                total+=roll;
+                lightRes.textContent = roll + '% to Lightning Resistance';
+            }
+
+            //update general stats
+            count++;
+            if(usageCount){
+                usageCount.textContent=count.toString();
+            }
+            if(count == 1 || total>best){
+                best = total;
+                if(bestSpan){
+                    bestSpan.textContent = best.toString();
+                }
+            }
+            if(count == 1 || total<worst){
+                worst = total;
+                if(worstSpan){
+                    worstSpan.textContent = worst.toString();
+                }
+            }
+            //stop on perfect rolls
+            if(total == perfectRoll || total == zeroRoll){
+                item?.removeEventListener('click',reroll);
+            }
+        }
+    }
+
+    function randomWholeIntBetween(min,max){
+        const minCeiled = Math.ceil(min);
+        const maxFloored = Math.floor(max);
+        return Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled);
+    }
+</script>
+<style define:vars={{divineUrl,leftUniqueIconUrl,rightUniqueIconUrl,middleUniqueIconUrl,seperatorIconUrl}}>
+@font-face {
+    font-family: 'FontinSmallCaps';
+    src: url('/fonts/Fontin-SmallCaps.ttf');
+}
+
+#stash{
+    margin-top:10px;
+    min-width: 64px;
+    min-height: 64px;
+    max-width: 64px;
+    max-height: 64px;
+    border: 2px solid #3b3c3a;
+    border-radius: 5px;
+    box-shadow: 0 0 10px #3b3c3a;
+    background-color: #0d0d0b;
+    background-image: var(--divineUrl);
+    background-blend-mode: color-dodge;
+}
+div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.item-box.-unique > .header.-double {
+    background-image: var(--leftUniqueIconUrl), var(--rightUniqueIconUrl), var(--middleUniqueIconUrl);
+}
+
+.item-stats {
+    display: block;
+    padding: 0.5rem 1rem;
+}
+.item-box {
+    display: inline-block;
+    box-sizing: border-box;
+    border-width: 1px;
+    border-style: solid;
+    padding: 1px;
+    min-width: 220px;
+    max-width: 440px;
+    text-align: center;
+    font-family: 'FontinSmallCaps',verdana,arial,helvetica,sans-serif;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: normal;
+    font-style: normal;
+    font-variant-ligatures: none;
+    color: rgb(127 127 127);
+    background-color: #000;
+}
+.item-box.-unique {
+    border-color: rgb(175 96 37);
+}
+
+
+.item-box > .header {
+    display: block;
+    overflow: hidden;
+    position: relative;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 21px;
+    background-position: top left, top right, top center;
+    background-repeat: no-repeat, no-repeat, repeat-x;
+    background-size: contain;
+}
+
+.item-box.-unique > .header {
+    color: rgb(175 96 37);
+}
+
+.item-box > .header.-double {
+    padding: 6px 45px;
+    height: 51px;
+    line-height: 24px;
+}
+
+.item-stats > .group {
+    display: block;
+    margin: 0 auto;
+}
+
+.tc.-mod {
+    font-family: 'FontinSmallCaps', Verdana, Arial, Helvetica, sans-serif;
+    font-variant-ligatures: none;
+    color: rgb(136 136 255);
+}
+
+.item-stats > .group:nth-last-child(n + 2)::after, .item-stat-separator::before {
+    content: "";
+    display: block;
+    margin: 0 auto;
+    width: auto;
+    height: 11px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-image: var(--seperatorIconUrl);
+}
+.tc {
+    font-style: normal;
+}
+.tc.-value {
+    color: rgb(255 255 255);
+}
+.tc.-flavour {
+    font-style: italic;
+    color: rgb(175 96 37);
+}
+</style>
