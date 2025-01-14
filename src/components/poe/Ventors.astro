@@ -45,42 +45,133 @@ const divineUrl = `url(${divineImage.src})`;
         <div id="stash">
             <Image id="divineOrb" src={divineImage} alt="Divine Orb"/>
         </div>
-        <h1><span id="count">0</span> spent</h1>
     </div>
     <div>
-        <h1>Best:<span id="best">-</span></h1>
-        <h1>Worst:<span id="worst">-</span></h1>
+        <h2>Spent:<span id="count">-</span></h2>
+        <h2>Current:<span id="current">-</span></h2>
+        <h2>Best:<span id="best">-</span></h2>
+        <h2>Worst:<span id="worst">-</span></h2>
     </div>
 </div>
 
 
 
 <script>
+    class Mod {
+        element: HTMLElement;
+        name: string;
+        lowestMod: number;
+        highestMod: number;
+        modText: string;
+        //we could just have roll count, lowest and highest rolls, and current roll on the Item class, but just incase we need individual mod roll/etc. 
+        rollCount: number;
+        lowestRoll?: number;
+        highestRoll?: number;
+        _currentRoll?: number;
+        
+
+        public get currentRoll(){
+            return this._currentRoll!;
+        }
+
+        public set currentRoll(value: number){
+            if(this.rollCount==0 || value < this.lowestRoll!){
+                this.lowestRoll = value;
+            }
+            if(this.rollCount==0 || value > this.highestRoll!){
+                this.highestRoll = value;
+            }
+            this._currentRoll = value;
+        }
+
+        constructor(n,l,h,mt){
+            this.rollCount = 0;
+            this.name = n;
+            this.lowestMod = l;
+            this.highestMod = h;
+            this.modText = mt;
+            this.element = document?.getElementById(n)!;
+            this.roll();
+        }
+
+        roll(): number {
+            let rolledValue = randomWholeIntBetween(this.lowestMod,this.highestMod);
+            this.currentRoll = rolledValue;
+            this.rollCount++;
+            return rolledValue;
+        }
+
+        updateElement(){
+            this.element.textContent = this.currentRoll + this.modText;
+        }
+    }
+
+    class Item {
+        modifiers: Array<Mod>;
+        perfectRoll: number;
+        skunkRoll: number;
+        rollCount: number;
+        lowestRoll?: number;
+        highestRoll?: number;
+        _currentRoll?: number;
+
+        public get currentRoll(){
+            return this._currentRoll!;
+        }
+
+        public set currentRoll(value: number){
+            if(this.rollCount==0 || value < this.lowestRoll!){
+                this.lowestRoll = value;
+            }
+            if(this.rollCount==0 || value > this.highestRoll!){
+                this.highestRoll = value;
+            }
+            this._currentRoll = value;
+        }
+        constructor(m,b,w){
+            this.modifiers = m;
+            this.perfectRoll = b;
+            this.skunkRoll = w;
+            this.rollCount = 0;
+        }
+
+        roll(){
+            let count = 0;
+            this.modifiers.forEach( m => {
+                count+=m.roll();
+            });
+            this.currentRoll = count;
+            this.rollCount++;
+        }
+
+        updateModElements(){
+            this.modifiers.forEach(m=>m.updateElement());
+        }
+    }
+
     const orb = document.getElementById('divineOrb');
-    const item = document.getElementById('itembox');
+    const itembox = document.getElementById('itembox');
     const stash = document.getElementById('stash');
     const usageCount = document.getElementById('count');
-    const rarityImp = document.getElementById('rarityImp');
-    const life = document.getElementById('life');
-    const spirit = document.getElementById('spirit');
-    const rarityExp = document.getElementById('rarityExp');
-    const fireRes = document.getElementById('fireRes');
-    const coldRes = document.getElementById('coldRes');
-    const lightRes = document.getElementById('lightRes');
     const bestSpan = document.getElementById('best');
     const worstSpan = document.getElementById('worst');
+    const currentSpan = document.getElementById('current');
 
+    let rarityImp = new Mod('rarityImp',6,15,'% increased Rarity of Items found');
+    let life = new Mod('life',0,80,' to maximum Life');
+    let spirit = new Mod('spirit',0,20,' to Spirit');
+    let rarityExp = new Mod('rarityExp',-40,40,'% increased Rarity of Items found');
+    let fireRes = new Mod('fireRes',-40,40,'% to Fire Resistance');
+    let coldRes = new Mod('coldRes',-40,40,'% to Cold Resistance');
+    let lightRes = new Mod('lightRes',-40,40,'% to Lightning Resistance');
 
-    var count = 0;
-    var best = 0;
-    var worst = 0;
-    const perfectRoll = 275;
-    const zeroRoll = -154;
-    var orbPickedUp = false;
+    let item = new Item(new Array<Mod>(rarityImp,life,spirit,rarityExp,fireRes,coldRes,lightRes),275,-154);
+
+    let orbPickedUp = false;
 
 
     //if the orb is picked up and we click the item, we reroll the stats
-    item?.addEventListener('click', reroll);
+    itembox?.addEventListener('click', reroll);
 
     //places the orb back in the stash
     stash?.addEventListener('click', (ev) => {
@@ -106,70 +197,22 @@ const divineUrl = `url(${divineImage.src})`;
             orbStyle.left = (ev.clientX+1) + 'px';
             orbStyle.top = (ev.clientY+1) + 'px';
         });
-    },false);
+    });
 
 
     function reroll(){
         if(orbPickedUp){
+            item.roll();
+            //update page
+            item.updateModElements();
 
-            //roll, tally, and update stats
-            var total = 0;
-            if(rarityImp){
-                var roll = randomWholeIntBetween(6,15);
-                total+=roll;
-                rarityImp.textContent = roll + '% increased Rarity of Items found';
-            }
-            if(life){
-                var roll = randomWholeIntBetween(0,80);
-                total+=roll;
-                life.textContent = roll + ' to maximum Life';
-            }
-            if(spirit){
-                var roll = randomWholeIntBetween(0,20);
-                total+=roll;
-                spirit.textContent = roll + ' to Spirit';
-            }
-            if(rarityExp){
-                var roll = randomWholeIntBetween(-40,40);
-                total+=roll;
-                rarityExp.textContent = roll + '% increased Rarity of Items found';
-            }
-            if(fireRes){
-                var roll = randomWholeIntBetween(-40,40);
-                total+=roll;
-                fireRes.textContent = roll + '% to Fire Resistance';
-            }
-            if(coldRes){
-                var roll = randomWholeIntBetween(-40,40);
-                total+=roll;
-                coldRes.textContent = roll + '% to Cold Resistance';
-            }
-            if(lightRes){
-                var roll = randomWholeIntBetween(-40,40);
-                total+=roll;
-                lightRes.textContent = roll + '% to Lightning Resistance';
-            }
-
-            //update general stats
-            count++;
-            if(usageCount){
-                usageCount.textContent=count.toString();
-            }
-            if(count == 1 || total>best){
-                best = total;
-                if(bestSpan){
-                    bestSpan.textContent = best.toString();
-                }
-            }
-            if(count == 1 || total<worst){
-                worst = total;
-                if(worstSpan){
-                    worstSpan.textContent = worst.toString();
-                }
-            }
+            usageCount!.textContent = item.rollCount.toString();
+            currentSpan!.textContent = item.currentRoll.toString();
+            bestSpan!.textContent = item.highestRoll!.toString();
+            worstSpan!.textContent = item.lowestRoll!.toString();
             //stop on perfect rolls
-            if(total == perfectRoll || total == zeroRoll){
-                item?.removeEventListener('click',reroll);
+            if(item.currentRoll == item.perfectRoll || item.currentRoll == item.skunkRoll){
+                itembox?.removeEventListener('click',reroll);
             }
         }
     }
@@ -198,6 +241,9 @@ const divineUrl = `url(${divineImage.src})`;
     background-color: #0d0d0b;
     background-image: var(--divineUrl);
     background-blend-mode: color-dodge;
+}
+h2{
+    font-family: 'FontinSmallCaps',verdana,arial,helvetica,sans-serif;
 }
 div{
     display: flex;
